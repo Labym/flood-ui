@@ -22,6 +22,8 @@ module.exports = {
   // add your custom rules here
   rules: {
     'indent': 'off',
+    'no-eval': 'off',
+    'no-unused-vars': 'off',
     'comma-dangle': 'off',
     // allow async-await
     'generator-star-spacing': 'off',

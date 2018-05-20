@@ -22,7 +22,7 @@
   </div>
 </template>
 <script>
-import { resolveUrlPath } from '@/util/util'
+
 export default {
   name: 'SidebarItem',
   data () {
@@ -44,10 +44,10 @@ export default {
       return path == null ? index + '' : path
     },
     open (item) {
-      this.$router.push({
-        path: resolveUrlPath(item.path, item.label),
-        query: item.query
-      })
+      // this.$router.push({
+      //   path: resolveUrlPath(item.path, item.label),
+      //   query: item.query
+      // })
     }
   }
 }
