@@ -52,16 +52,37 @@
   </div>
 </template>
 <script>
-  import { mapState, mapGetters } from 'vuex'
+  import { mapGetters } from 'vuex'
   import { fullscreenToggel, listenfullscreen } from '@/util/util'
   import topLock from './header-lock'
   import topMenu from './header-menu'
   import topTheme from './header-theme'
   export default {
     components: { topLock, topMenu, topTheme },
-    name: 'header',
+    name: 'top',
     data () {
-      return {}
+      return {
+        userInfo: {
+          userInfo: {
+            username: 'admin',
+            name: 'avue',
+          },
+          roles: ['admin'],
+          permission: [
+            'sys_crud_btn_add',
+            'sys_crud_btn_export',
+            'sys_menu_btn_add',
+            'sys_menu_btn_edit',
+            'sys_menu_btn_del',
+            'sys_role_btn1',
+            'sys_role_btn2',
+            'sys_role_btn3',
+            'sys_role_btn4',
+            'sys_role_btn5',
+            'sys_role_btn6',
+          ]
+        }
+      }
     },
     filters: {},
     created () {},
@@ -69,9 +90,9 @@
       listenfullscreen(this.setScreen)
     },
     computed: {
-      ...mapState({
-        userInfo: state => state.user.userInfo
-      }),
+      // ...mapState({
+      //   userInfo: state => state.user.userInfo
+      // }),
       ...mapGetters(['isFullScren', 'isCollapse'])
     },
     methods: {

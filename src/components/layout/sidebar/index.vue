@@ -20,7 +20,6 @@
     components: {SidebarItem, logo},
     data: function () {
       return {
-        isCollapse: false,
         menu: [{
           id: 1,
           label: '首页',
@@ -137,7 +136,7 @@
       }
     },
     computed: {
-      ...mapGetters(['menu', 'tag', 'isCollapse']),
+      ...mapGetters(['tag', 'isCollapse']),
       nowTagValue: function () {
         return setUrlPath(this.$route)
       }

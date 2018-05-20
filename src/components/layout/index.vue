@@ -34,7 +34,6 @@
     name: 'index',
     data () {
       return {
-        isLock: false
       }
     },
     created () {},
