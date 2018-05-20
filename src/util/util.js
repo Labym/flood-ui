@@ -1,3 +1,4 @@
+/* eslint-disable */
 import {
   validatenull
 } from './validate'
@@ -29,7 +30,7 @@ export const formatRoutes = (aMenu) => {
         component (resolve) {
           let componentPath = ''
           if (component === 'Layout') {
-            require(['../page/index'], resolve)
+            require(['../pages/index'], resolve)
             return
           } else {
             componentPath = component
@@ -63,7 +64,7 @@ export const encryption = (params) => {
     })
   } else if (type === 'Aes') {
     param.forEach(ele => {
-      result[ele] = CryptoJS.AES.encrypt(result[ele], key).toString()
+      result[ele] = ' CryptoJS.AES.encrypt(result[ele], key).toString()'
     })
   }
   return result
