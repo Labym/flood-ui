@@ -9,6 +9,7 @@ const getters = {
   tagList: state => state.tags.tagList,
   tagCurrent: state => state.tags.tagCurrent,
   tagWel: state => state.tags.tagWel,
-  errLog: state => state.errLog.errLog
+  errLog: state => state.errLog.errLog,
+  menu: state => state.user.menu
 }
 export default getters

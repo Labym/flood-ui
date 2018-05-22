@@ -30,7 +30,7 @@ export const formatRoutes = (aMenu) => {
         component (resolve) {
           let componentPath = ''
           if (component === 'Layout') {
-            require(['../pages/index'], resolve)
+            require(['../components/layout/index'], resolve)
             return
           } else {
             componentPath = component
@@ -168,6 +168,8 @@ export const findParent = (menu, id) => {
  * 总体路由处理器
  */
 export const resolveUrlPath = (url, name) => {
+  console.log(name)
+  console.log(url)
   let reqUrl = url
   if (url.indexOf('#') !== -1 && url.indexOf('http') === -1) {
     const port = reqUrl.substr(reqUrl.indexOf(':'))

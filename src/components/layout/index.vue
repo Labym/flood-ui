@@ -5,11 +5,15 @@
       <div class="right">
         <div class="nav">
           <top class="top"></top>
-          <tags></tags>
         </div>
         <div class="main">
           <div class="router">
-              123123
+            <div class="router">
+              <keep-alive>
+                <router-view v-if="$route.meta.keepAlive"></router-view>
+              </keep-alive>
+              <router-view v-if="!$route.meta.keepAlive"></router-view>
+            </div>
           </div>
         </div>
       </div>
@@ -28,7 +32,7 @@
       tags,
       sidebar
     },
-    name: 'index',
+    name: 'Layout',
     data () {
       return {
       }
