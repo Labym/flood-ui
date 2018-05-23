@@ -4,7 +4,7 @@ import Vue from 'vue'
 import ElementUI from 'element-ui'
 import App from './App'
 import './styles/common.scss'
-import router from './router'
+import router from './router/index'
 import store from './store'
 Vue.config.productionTip = false
 Vue.use(ElementUI)

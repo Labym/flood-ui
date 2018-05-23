@@ -5,14 +5,16 @@ import {
 } from '@/config/env'
 import store from '@/store'
 import {
-  formatRoutes
+  formatRoutes, setTitle
 } from '@/util/util'
-
+import NProgress from 'nprogress' // progress bar
+import 'nprogress/nprogress.css' // progress bar style
+import Layout from '../components/layout/index'
 import baseRouter from './router'
-
+const _import = require('./_import')
 Vue.use(VueRouter)
 
-export default new VueRouter({
+const router = new VueRouter({
   // mode: 'history',
   strict: process.env.NODE_ENV !== 'production',
   scrollBehavior (to, from, savedPosition) {
@@ -28,5 +30,36 @@ export default new VueRouter({
       }
     }
   },
-  routes: [].concat(...formatRoutes(store.state.user.menu), baseRouter)
 })
+const asyncRouterMap = [
+  {
+    path: '/wel',
+    component: Layout,
+    redirect: '/wel/index',
+    children: [
+      {
+        path: 'index',
+        name: '首页',
+        component: _import('wel')
+      }
+    ]
+  }, {
+    path: '/admin',
+    component: Layout,
+    redirect: '/admin/user',
+    children: [
+      {
+        path: 'user',
+        name: '个人信息',
+        component: _import('resource/resourceList')
+      }, {
+        path: 'aaaa',
+        name: '个人信息',
+        component: _import('index')
+      }
+    ]
+  },
+].concat(baseRouter)
+
+router.addRoutes(asyncRouterMap)
+export default router

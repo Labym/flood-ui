@@ -32,6 +32,7 @@ export const formatRoutes = (aMenu) => {
         component (resolve) {
           let componentPath = ''
           if (component === 'Layout') {
+            console.log(component)
             require(['../components/layout/index'], resolve)
             return
           } else {

@@ -1,0 +1,54 @@
+[
+  {
+    "id": 1,
+    "parentId": -1,
+    "children": [
+      {
+        "id": 2,
+        "parentId": 1,
+        "children": [],
+        "icon": "icon-yonghuguanli",
+        "name": "用户管理",
+        "url": "",
+        "spread": false,
+        "path": "/admin/user",
+        "component": "pages/resource/resourceList",
+        "authority": null,
+        "redirect": null,
+        "code": null,
+        "type": "0",
+        "label": "用户管理",
+        "sort": 2
+      },
+      {
+        "id": 3,
+        "parentId": 1,
+        "children": [],
+        "icon": "icon-caidanguanli",
+        "name": "菜单管理",
+        "url": "",
+        "spread": false,
+        "path": "/admin/index",
+        "component": "pages/wel",
+        "authority": null,
+        "redirect": null,
+        "code": null,
+        "type": "0",
+        "label": "菜单管理",
+        "sort": 3
+      }
+    ],
+    "icon": "icon-xitongguanli",
+    "name": "系统管理",
+    "url": null,
+    "spread": false,
+    "path": "/admin",
+    "component": "Layout",
+    "authority": null,
+    "redirect": null,
+    "code": null,
+    "type": "0",
+    "label": "系统管理",
+    "sort": 1
+  }
+]
