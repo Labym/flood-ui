@@ -15,6 +15,7 @@ export const initMenu = (router, menu) => {
 
 export const formatRoutes = (aMenu) => {
   const aRouter = []
+  console.log(aMenu)
   aMenu.forEach(oMenu => {
     const {
       path,
@@ -23,6 +24,7 @@ export const formatRoutes = (aMenu) => {
       icon,
       children
     } = oMenu
+    console.log(oMenu)
     if (!validatenull(component)) {
       let filePath
       const oRouter = {
@@ -44,6 +46,8 @@ export const formatRoutes = (aMenu) => {
       aRouter.push(oRouter)
     }
   })
+  console.log("router:")
+  console.log(aRouter)
   return aRouter
 }
 

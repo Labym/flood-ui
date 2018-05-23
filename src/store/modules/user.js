@@ -1,8 +1,8 @@
 /* eslint-disable eqeqeq */
-import {getToken, setToken, removeToken} from '@/util/auth'
-import {setStore, getStore, removeStore} from '@/util/store'
-import {validatenull} from '@/util/validate'
-import {encryption} from '@/util/util'
+import { getToken, setToken, removeToken } from '@/util/auth'
+import { setStore, getStore, removeStore } from '@/util/store'
+import { validatenull } from '@/util/validate'
+import { encryption } from '@/util/util'
 
 const user = {
   state: {
@@ -11,11 +11,11 @@ const user = {
     roles: [],
     menu: [],
     menuAll: [],
-    token: getStore({name: 'token'}) || '',
+    token: getStore({ name: 'token' }) || '',
   },
   actions: {
     // 根据用户名登录
-    LoginByUsername ({commit, state, dispatch}, userInfo) {
+    LoginByUsername ({ commit, state, dispatch }, userInfo) {
       const user = encryption({
         data: userInfo,
         type: 'Aes',
@@ -34,7 +34,7 @@ const user = {
       // })
     },
     // 根据手机号登录
-    LoginByPhone ({commit, state, dispatch}, userInfo) {
+    LoginByPhone ({ commit, state, dispatch }, userInfo) {
       // return new Promise((resolve, reject) => {
       //   loginByUsername(userInfo.phone, userInfo.code).then(res => {
       //     const data = res.data
@@ -46,7 +46,7 @@ const user = {
       //   })
       // })
     },
-    GetTableData ({commit, state, dispatch}, page) {
+    GetTableData ({ commit, state, dispatch }, page) {
       // return new Promise((resolve, reject) => {
       //   getTableData(page).then(res => {
       //     const data = res.data
@@ -54,7 +54,7 @@ const user = {
       //   })
       // })
     },
-    GetUserInfo ({commit, state, dispatch}) {
+    GetUserInfo ({ commit, state, dispatch }) {
       // return new Promise((resolve, reject) => {
       //   getUserInfo().then((res) => {
       //     const data = res.data
@@ -66,7 +66,7 @@ const user = {
       // })
     },
     // 登出
-    LogOut ({commit, state}) {
+    LogOut ({ commit, state }) {
       // return new Promise((resolve, reject) => {
       //   logout().then(() => {
       //     commit('SET_TOKEN', '')
@@ -81,7 +81,7 @@ const user = {
       // })
     },
     // 注销session
-    FedLogOut ({commit}) {
+    FedLogOut ({ commit }) {
       return new Promise(resolve => {
         commit('SET_TOKEN', '')
         commit('DEL_ALL_TAG')
@@ -91,7 +91,7 @@ const user = {
       })
     },
     // 获取系统菜单
-    GetMenu ({commit}, parentId) {
+    GetMenu ({ commit }, parentId) {
       const menus = [{
         id: 1,
         label: '首页',
@@ -110,7 +110,7 @@ const user = {
         children: [],
       }, {
         id: 2,
-        label: '系统管理',
+        label: '系统管理1',
         href: '',
         icon: 'icon-iframe',
         component: 'Layout',
@@ -122,7 +122,7 @@ const user = {
           href: 'resource/resourceList',
           component: 'resource/resourceList',
           icon: 'icon-baidu',
-          path: '/settings/resource',
+          path: 'resource',
           children: [],
         }, {
           id: 4,
@@ -209,10 +209,15 @@ const user = {
         ]
       }
       ]
+      menus.forEach(ele => {
+        ele.children.forEach(child => {
+          if (!validatenull(child.component)) child.path = `${ele.path}/${child.path}`
+        })
+      })
       commit('SET_MENU', menus)
     },
     // 获取全部菜单
-    GetMenuAll ({commit}) {
+    GetMenuAll ({ commit }) {
       // return new Promise(resolve => {
       //   getMenuAll().then((res) => {
       //     const data = res.data
@@ -226,23 +231,18 @@ const user = {
   mutations: {
     SET_TOKEN: (state, token) => {
       state.token = token
-      setStore({name: 'token', content: state.token, type: 'session'})
+      setStore({ name: 'token', content: state.token, type: 'session' })
     },
     SET_USERIFNO: (state, userInfo) => {
       state.userInfo = userInfo
     },
     SET_MENU: (state, menu) => {
-      const list = menu.filter(ele => {
-        console.log(ele)
-        if (validatenull(ele.meta)) return true
-        if (validatenull(ele.meta.roles)) return true
-        if (ele.meta.roles.indexOf(state.roles[0]) != -1) {
-          return true
-        } else {
-          return true
-        }
+      state.menu = menu
+      setStore({
+        name: 'menu',
+        content: state.menu,
+        type: 'session'
       })
-      state.menu = list
     },
     SET_MENU_ALL: (state, menuAll) => {
       state.menuAll = menuAll
