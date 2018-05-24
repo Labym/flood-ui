@@ -3,6 +3,7 @@ import {getToken, setToken, removeToken} from '@/util/auth'
 import {setStore, getStore, removeStore} from '@/util/store'
 import {validatenull} from '@/util/validate'
 import {encryption} from '@/util/util'
+import {authenticate} from '@/api/user'
 
 const user = {
   state: {
@@ -20,18 +21,19 @@ const user = {
         data: userInfo,
         type: 'Aes',
         key: 'avue',
-        param: ['useranme', 'password']
+        param: ['username', 'password']
       })
-      // return new Promise((resolve, reject) => {
-      //   loginByUsername(user.username, user.password, userInfo.code, userInfo.redomStr).then(res => {
-      //     const data = res.data
-      //     commit('SET_TOKEN', data)
-      //     commit('DEL_ALL_TAG')
-      //     commit('CLEAR_LOCK')
-      //     setToken(data)
-      //     resolve()
-      //   })
-      // })
+      console.log(user)
+      return new Promise((resolve, reject) => {
+        authenticate(user.username, user.password, user.captcha).then(res => {
+          const data = res.data
+          commit('SET_TOKEN', data)
+          commit('DEL_ALL_TAG')
+          commit('CLEAR_LOCK')
+          setToken(data)
+          resolve()
+        })
+      })
     },
     // 根据手机号登录
     LoginByPhone ({commit, state, dispatch}, userInfo) {

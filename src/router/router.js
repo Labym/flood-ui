@@ -1,5 +1,5 @@
 import Layout from '../components/layout'
-
+import Login from '../pages/login'
 const _import = require('./_import')
 export default [{
   path: '/',
@@ -14,4 +14,7 @@ export default [{
     name: '首页',
     component: _import('wel')
   }]
+}, {
+  path: '/login',
+  component: Login,
 }]

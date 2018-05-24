@@ -7,21 +7,23 @@
 import axios from 'axios'
 import store from '../store'
 import router from '../router/router'
-import { getToken, setToken, removeToken } from '@/util/auth'
-import { Message } from 'element-ui'
+import {getToken, setToken, removeToken} from '@/util/auth'
+import {Message} from 'element-ui'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css'// progress bar style
 // 超时时间
 axios.defaults.timeout = 30000
 // 跨域请求，允许保存cookie
 axios.defaults.withCredentials = true
-NProgress.configure({ showSpinner: false })// NProgress Configuration
+NProgress.configure({showSpinner: false})// NProgress Configuration
 let msg
 // HTTPrequest拦截
 axios.interceptors.request.use(config => {
+  config.baseURL = 'http://127.0.0.1:8088'
   NProgress.start() // start progress bar
   if (store.getters.access_token) {
     config.headers['Authorization'] = 'Bearer ' + getToken() // 让每个请求携带token--['X-Token']为自定义key 请根据实际情况自行修改
+    config.header['Content-Type'] = 'application/json'
   }
   return config
 }, error => {
