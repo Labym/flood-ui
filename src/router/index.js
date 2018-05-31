@@ -59,7 +59,9 @@ const asyncRouterMap = [
       }
     ]
   },
-].concat(baseRouter)
+]
+// .concat(baseRouter)
 
+router.addRoutes(baseRouter)
 router.addRoutes(asyncRouterMap)
 export default router

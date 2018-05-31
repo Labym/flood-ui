@@ -4,7 +4,7 @@ import {setStore, getStore, removeStore} from '@/util/store'
 import {validatenull} from '@/util/validate'
 import {encryption} from '@/util/util'
 import {authenticate} from '@/api/user'
-
+import {currentUserMenus} from '@/api/menus'
 const user = {
   state: {
     userInfo: {},
@@ -17,20 +17,19 @@ const user = {
   actions: {
     // 根据用户名登录
     LoginByUsername ({commit, state, dispatch}, userInfo) {
-      const user = encryption({
-        data: userInfo,
-        type: 'Aes',
-        key: 'avue',
-        param: ['username', 'password']
-      })
-      console.log(user)
+      // const user = encryption({
+      //   data: userInfo,
+      //   type: 'Aes',
+      //   key: 'avue',
+      //   param: ['username', 'password']
+      // })
       return new Promise((resolve, reject) => {
-        authenticate(user.username, user.password, user.captcha).then(res => {
+        authenticate(userInfo.username, userInfo.password, userInfo.captcha).then(res => {
           const data = res.data
-          commit('SET_TOKEN', data)
-          commit('DEL_ALL_TAG')
+          commit('SET_TOKEN', data.token)
+          // commit('DEL_ALL_TAG')
           commit('CLEAR_LOCK')
-          setToken(data)
+          setToken(data.token)
           resolve()
         })
       })
@@ -148,15 +147,23 @@ const user = {
         }
       ]
 
-      menus.forEach(ele => {
-        ele.children.forEach(child => {
-          console.log(child)
-          if (!validatenull(child.component)) {
-            child.path = `${ele.path}/${child.path}`
-          }
+      return new Promise((resolve, reject) => {
+        currentUserMenus().then((res) => {
+          const data = res.data
+          commit('SET_MENU', data)
+          resolve()
+        }).catch(error => {
+          reject(error)
         })
       })
-      commit('SET_MENU', menus)
+      // menus.forEach(ele => {
+      //   ele.children.forEach(child => {
+      //     console.log(child)
+      //     if (!validatenull(child.component)) {
+      //       child.path = `${ele.path}/${child.path}`
+      //     }
+      //   })
+      // })
     },
     // 获取全部菜单
     GetMenuAll ({commit}) {
@@ -179,6 +186,7 @@ const user = {
       state.userInfo = userInfo
     },
     SET_MENU: (state, menu) => {
+      console.log(menu)
       state.menu = menu
       setStore({
         name: 'menu',

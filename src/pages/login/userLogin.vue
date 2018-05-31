@@ -50,10 +50,10 @@
       }
       return {
         loginForm: {
-          username: 'admin',
+          username: 'zhangjingl02@gmail.com',
           password: '123456',
           captcha: {
-            value: ''
+            value: '1234'
           },
           randomStr: ''
         },

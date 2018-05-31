@@ -21,9 +21,10 @@ let msg
 axios.interceptors.request.use(config => {
   config.baseURL = 'http://127.0.0.1:8088'
   NProgress.start() // start progress bar
+  config.headers['Content-Type'] = 'application/json'
+  console.log(store.getters.access_token)
   if (store.getters.access_token) {
     config.headers['Authorization'] = 'Bearer ' + getToken() // 让每个请求携带token--['X-Token']为自定义key 请根据实际情况自行修改
-    config.header['Content-Type'] = 'application/json'
   }
   return config
 }, error => {
