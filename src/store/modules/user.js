@@ -1,10 +1,13 @@
 /* eslint-disable eqeqeq */
+import {isEmpty} from 'lodash'
 import {getToken, setToken, removeToken} from '@/util/auth'
 import {setStore, getStore, removeStore} from '@/util/store'
 import {validatenull} from '@/util/validate'
 import {encryption} from '@/util/util'
 import {authenticate} from '@/api/user'
 import {currentUserMenus} from '@/api/menus'
+import router from '../../router/index'
+import {initMenu} from '../../util/util'
 const user = {
   state: {
     userInfo: {},
@@ -93,60 +96,6 @@ const user = {
     },
     // 获取系统菜单
     GetMenu ({commit}, parentId) {
-      const menus = [
-        {
-          'id': 1,
-          'parentId': -1,
-          'children': [
-            {
-              'id': 2,
-              'parentId': 1,
-              'children': [],
-              'icon': 'icon-yonghuguanli',
-              'name': '用户管理',
-              'url': '',
-              'spread': false,
-              'path': '/admin/user',
-              'href': '/admin/user',
-              'authority': null,
-              'redirect': null,
-              'code': null,
-              'type': '0',
-              'label': '用户管理',
-              'sort': 2
-            },
-            {
-              'id': 3,
-              'parentId': 1,
-              'children': [],
-              'icon': 'icon-caidanguanli',
-              'name': '菜单管理',
-              'url': '',
-              'spread': false,
-              'path': '/admin/aaaa',
-              'href': '/admin/aaaa',
-              'authority': null,
-              'redirect': null,
-              'code': null,
-              'type': '0',
-              'label': '菜单管理',
-              'sort': 3
-            }
-          ],
-          'icon': 'icon-xitongguanli',
-          'name': '系统管理',
-          'url': null,
-          'spread': false,
-          'href': '/admin',
-          'authority': null,
-          'redirect': null,
-          'code': null,
-          'type': '0',
-          'label': '系统管理',
-          'sort': 1
-        }
-      ]
-
       return new Promise((resolve, reject) => {
         currentUserMenus().then((res) => {
           const data = res.data
@@ -185,9 +134,19 @@ const user = {
     SET_USERIFNO: (state, userInfo) => {
       state.userInfo = userInfo
     },
-    SET_MENU: (state, menu) => {
-      console.log(menu)
-      state.menu = menu
+    SET_MENU: (state, menus) => {
+      let navs = []
+      menus.root.forEach((menu) => {
+        let nav = {id: menu.data.id, path: menu.data.url, name: menu.data.name, ...menu.data.extensions, children: []}
+        if (!isEmpty(menu.children)) {
+          menu.children.forEach((child) => {
+            nav.children.push({id: child.data.id, path: child.data.url, name: child.data.name, ...child.data.extensions})
+          })
+        }
+        navs.push(nav)
+      })
+      initMenu(router, navs)
+      state.menu = navs
       setStore({
         name: 'menu',
         content: state.menu,

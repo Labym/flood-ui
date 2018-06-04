@@ -11,6 +11,8 @@ import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
 import Layout from '../components/layout/index'
 import baseRouter from './router'
+import {filter} from './interceptor'
+
 const _import = require('./_import')
 Vue.use(VueRouter)
 
@@ -63,5 +65,6 @@ const asyncRouterMap = [
 // .concat(baseRouter)
 
 router.addRoutes(baseRouter)
-router.addRoutes(asyncRouterMap)
+// router.addRoutes(asyncRouterMap)
+filter(router)
 export default router

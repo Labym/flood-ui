@@ -10,6 +10,8 @@ export const initMenu = (router, menu) => {
   if (menu.length === 0) {
     return
   }
+  console.log('init menus:')
+  console.log(menu)
   router.addRoutes(formatRoutes(menu))
 }
 
@@ -24,15 +26,12 @@ export const formatRoutes = (aMenu) => {
       icon,
       children
     } = oMenu
-    console.log(oMenu)
     if (!validatenull(component)) {
-      let filePath
       const oRouter = {
         path: path,
         component (resolve) {
           let componentPath = ''
           if (component === 'Layout') {
-            console.log(component)
             require(['../components/layout/index'], resolve)
             return
           } else {
@@ -47,8 +46,6 @@ export const formatRoutes = (aMenu) => {
       aRouter.push(oRouter)
     }
   })
-  console.log("router:")
-  console.log(aRouter)
   return aRouter
 }
 
@@ -173,8 +170,6 @@ export const findParent = (menu, id) => {
  * 总体路由处理器
  */
 export const resolveUrlPath = (url, name) => {
-  console.log(name)
-  console.log(url)
   let reqUrl = url
   if (url.indexOf('#') !== -1 && url.indexOf('http') === -1) {
     const port = reqUrl.substr(reqUrl.indexOf(':'))
