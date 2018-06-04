@@ -1,4 +1,4 @@
-import {eq} from 'lodash'
+import {eq, isEmpty} from 'lodash'
 import store from '../store'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
@@ -15,8 +15,7 @@ export const filter = (router) => {
     if (!store.getters.access_token) {
       next({path: '/login'})
     }
-
-    if (!store.getters.menu) {
+    if (isEmpty(store.getters.menu)) {
       console.log('no menus')
     }
     next()
